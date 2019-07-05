@@ -17,6 +17,6 @@ public class BinaryNode {
 
 
     public String toString() {
-
+        return "";
     }
 }
