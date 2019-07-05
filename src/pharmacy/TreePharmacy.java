@@ -42,8 +42,8 @@ public class TreePharmacy {
         }
     }
 
-    public void remove(String medication, PharmacyDate pharmacyDate) {
-
+    public void remove(PharmacyItem pharmacyItem) {
+        
     }
 
     public void removeAll(String medication) {
@@ -56,5 +56,9 @@ public class TreePharmacy {
 
     public void removeInferior(PharmacyDate pharmacyDate) {
         //TODO Enlever tous les éléments ayant une data inférieure à ça
+    }
+
+    public String toString() {
+        return head.toString();
     }
 }
