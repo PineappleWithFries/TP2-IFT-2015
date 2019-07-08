@@ -48,15 +48,19 @@ public class PharmacyDate implements Comparable<PharmacyDate> {
     //Constructeur de la classe. Nous allons passer en parametre des inputs deja "parser"
 
     public PharmacyDate(int year, Month month, int day){
-
         this.year=year;
         this.month=month;
         this.day=day;
+    }
 
+    public PharmacyDate(String string) {
+        String[] parsedString = string.split("-");
+        year = Integer.parseInt(parsedString[0]);
+        month = Month.values()[Integer.parseInt(parsedString[1]) - 1];
+        day = Integer.parseInt(parsedString[2]);
     }
 
     //Fonction pour assurer que la PharmacyDate est de format valide
-
     public boolean isValid(){
 
         int beginComparison = this.compareTo(BEGIN_DATE);
@@ -92,6 +96,4 @@ public class PharmacyDate implements Comparable<PharmacyDate> {
         }
 
     }
-
-
 }
