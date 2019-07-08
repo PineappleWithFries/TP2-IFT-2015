@@ -19,17 +19,28 @@ public class PharmacyItem implements Comparable<PharmacyItem> {
     //date, on va trier par l'ordre lexicographique des noms des medicaments
 
     public int compareTo(PharmacyItem pharmacyItem) {
+        if(pharmacyItem.date == null) {
+            //TODO TEMPORAIRE NE PAS LAISSER CE IF ICI
+            return this.medication.compareTo(pharmacyItem.medication);
+        }
+
 
         int differenceTemps = this.date.compareTo(pharmacyItem.date);
 
         if (differenceTemps!= 0) {
             return differenceTemps;
-
         } else {
 
             return this.medication.compareTo(pharmacyItem.medication);
 
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof PharmacyItem) &&
+                ((PharmacyItem) o).date.equals(this.date) &&
+                ((PharmacyItem) o).medication.equals(this.medication);
     }
 
     public String toString(){

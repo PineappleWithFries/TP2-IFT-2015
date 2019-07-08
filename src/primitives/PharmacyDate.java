@@ -29,15 +29,15 @@ public class PharmacyDate implements Comparable<PharmacyDate> {
         December(31, false);
 
         public int numberOfDays;
-        public boolean leapDay;
+        public boolean leapMonth;
 
-        Month(int numberOfDays, boolean leapDay) {
+        Month(int numberOfDays, boolean leapMonth) {
             this.numberOfDays = numberOfDays;
-            this.leapDay = leapDay;
+            this.leapMonth = leapMonth;
         }
 
         public boolean isDateValid(int day, int year) {
-            if(this.equals(Month.February) && ((year % 4 == 0) || (year % 100 == 0 && !(year % 400 == 0)))) {
+            if(this.leapMonth && ((year % 4 == 0) || (year % 100 == 0 && !(year % 400 == 0)))) {
                 return (day > 0) && (day <= numberOfDays + 1);
             }
 

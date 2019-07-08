@@ -35,7 +35,8 @@ public class BinaryNode {
     }
 
     public String toString() {
-        return "" + value + "\n" + (left != null ? left : "") + (right != null ? right : "");
+
+        return "" + value + "\n" + (left != null ? left.toString(1) : "") + (right != null ? right.toString(1) : "");
     }
 
     public String toString(int depth) {
@@ -44,6 +45,9 @@ public class BinaryNode {
         for(int i = 0; i < depth; i++) {
             buffer += PRINT_BUFFER;
         }
+
+        if(depth > 100)
+            return "Probable recursive definition in tree\n";
 
         return "" + buffer + value + "\n" +
                 (left != null ? left.toString(depth + 1) : "") +
