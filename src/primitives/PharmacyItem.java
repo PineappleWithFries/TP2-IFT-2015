@@ -30,9 +30,7 @@ public class PharmacyItem implements Comparable<PharmacyItem> {
         if (differenceTemps!= 0) {
             return differenceTemps;
         } else {
-
             return this.medication.compareTo(pharmacyItem.medication);
-
         }
     }
 

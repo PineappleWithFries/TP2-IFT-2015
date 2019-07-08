@@ -24,7 +24,8 @@ public class PharmacyDate implements Comparable<PharmacyDate> {
         June(30, false),
         July(31, false),
         August(31, false),
-        October(30, false),
+        September(30, false),
+        October(31, false),
         November(30, false),
         December(31, false);
 
@@ -95,5 +96,25 @@ public class PharmacyDate implements Comparable<PharmacyDate> {
             return dayDifference;
         }
 
+    }
+
+    public String toString() {
+        int index = -1;
+
+        for(int i = 0; i < 12; i++) {
+            if(Month.values()[i] == this.month) {
+                index = i;
+            }
+        }
+
+        index++;
+
+        String stringIndex;
+        stringIndex = "" + index;
+        if(index < 10) {
+            stringIndex = "0" + stringIndex;
+        }
+
+        return "" + year + "-" + stringIndex + "-" + this.day;
     }
 }
