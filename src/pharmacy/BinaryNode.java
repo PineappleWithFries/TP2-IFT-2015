@@ -34,9 +34,11 @@ public class BinaryNode {
         this.right = right;
     }
 
-    public String toString() {
 
-        return "" + value + "\n" + (left != null ? left.toString(1) : "") + (right != null ? right.toString(1) : "");
+
+    public String toString() {
+        return "" + value + "\n" + (left != null ? left.toString() : "") + (right != null ? right.toString() : "");
+        //return "" + value + "\n" + (left != null ? left.toString(1) : "") + (right != null ? right.toString(1) : "");
     }
 
     public String toString(int depth) {

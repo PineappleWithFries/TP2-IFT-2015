@@ -98,6 +98,27 @@ public class PharmacyDate implements Comparable<PharmacyDate> {
 
     }
 
+    public PharmacyDate addDays(int amount) {
+        if(this.day + amount > this.month.numberOfDays) {
+            if(this.month != Month.December) {
+                Month nextMonth = null;
+
+                for(int i = 0; i < 11; i++) {
+                    if(Month.values()[i] == month) {
+                        nextMonth = Month.values()[i + 1];
+                        break;
+                    }
+                }
+
+                return new PharmacyDate(year, nextMonth, 1).addDays(amount - (this.month.numberOfDays - this.day) - 1);
+            } else {
+                return new PharmacyDate(year + 1, Month.January, 1).addDays(amount - (this.month.numberOfDays - this.day) - 1);
+            }
+        } else {
+            return new PharmacyDate(year, month, day + amount);
+        }
+    }
+
     public String toString() {
         int index = -1;
 
@@ -115,6 +136,6 @@ public class PharmacyDate implements Comparable<PharmacyDate> {
             stringIndex = "0" + stringIndex;
         }
 
-        return "" + year + "-" + stringIndex + "-" + this.day;
+        return "" + year + "-" + stringIndex + "-" + (this.day < 10 ? "0" + this.day : this.day);
     }
 }

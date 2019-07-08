@@ -19,6 +19,8 @@ public class Tp2 {
         String outputFile = "src/tests/exemple1-.txt";
         treePharmacy = new TreePharmacy();
 
+        PharmacyDate testJour = new PharmacyDate(1999, PharmacyDate.Month.August, 2);
+
         try {
             inputReader = new BufferedReader(new FileReader(inputFile));
             outputWriter = new BufferedWriter(new FileWriter(outputFile));
@@ -87,6 +89,9 @@ public class Tp2 {
             String name = currentString;
             int quantity = Integer.parseInt(inputs.removeFirst());
             int cycles = Integer.parseInt(inputs.removeFirst());
+            int timeLength = quantity * cycles;
+
+            PharmacyDate endDate = treePharmacy.getDate().addDays(timeLength);
 
             currentString = inputs.removeFirst();
         }
@@ -113,5 +118,8 @@ public class Tp2 {
     private static void processStock() throws IOException {
         if(!inputs.removeFirst().equals(";"))
             throw new IOException("Error in file structure");
+
+        outputWriter.append("STOCK " + treePharmacy.getDate() + "\n");
+        outputWriter.append("" + treePharmacy);
     }
 }

@@ -274,6 +274,10 @@ public class TreePharmacy {
         return false;
     }
 
+    public boolean retrieve(int quantity, PharmacyDate maxDate) {
+          return false;//TODO bleh
+    }
+
     public int removeAllCondition(Condition<PharmacyItem> condition) {
         int removed = 0;
 
@@ -282,6 +286,10 @@ public class TreePharmacy {
         }
 
         return removed;
+    }
+
+    public PharmacyDate getDate() {
+        return currentDate;
     }
 
     public void setDate(PharmacyDate pharmacyDate) {

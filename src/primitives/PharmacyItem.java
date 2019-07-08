@@ -19,12 +19,6 @@ public class PharmacyItem implements Comparable<PharmacyItem> {
     //date, on va trier par l'ordre lexicographique des noms des medicaments
 
     public int compareTo(PharmacyItem pharmacyItem) {
-        if(pharmacyItem.date == null) {
-            //TODO TEMPORAIRE NE PAS LAISSER CE IF ICI
-            return this.medication.compareTo(pharmacyItem.medication);
-        }
-
-
         int differenceTemps = this.date.compareTo(pharmacyItem.date);
 
         if (differenceTemps!= 0) {
@@ -39,11 +33,6 @@ public class PharmacyItem implements Comparable<PharmacyItem> {
         return (o instanceof PharmacyItem) &&
                 ((PharmacyItem) o).date.equals(this.date) &&
                 ((PharmacyItem) o).medication.equals(this.medication);
-    }
-
-    public String toString(){
-
-        return date + " " + medication + " " + quantity;
     }
 
     public int getQuantity() {
@@ -61,5 +50,9 @@ public class PharmacyItem implements Comparable<PharmacyItem> {
     public boolean isValid() {
 
         return quantity >0 ? true : false;
+    }
+
+    public String toString() {
+        return medication + " " + quantity + " " + date;
     }
 }
