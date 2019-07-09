@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Tp2 {
+    private static int currentPrescription;
     private static BufferedReader inputReader;
     private static BufferedWriter outputWriter;
     private static TreePharmacy treePharmacy;
@@ -84,17 +85,31 @@ public class Tp2 {
         if(!inputs.removeFirst().equals(":"))
             throw new IOException("Error in file structure");
 
+        currentPrescription++;
+
+        outputWriter.write("PRESCRIPTION " + currentPrescription + "\n");
+
         String currentString = inputs.removeFirst();
         while(!currentString.equals(";")) {
             String name = currentString;
-            int quantity = Integer.parseInt(inputs.removeFirst());
+            int quantityPerCycle = Integer.parseInt(inputs.removeFirst());
             int cycles = Integer.parseInt(inputs.removeFirst());
-            int timeLength = quantity * cycles;
+            int quantity = quantityPerCycle * cycles;
 
-            PharmacyDate endDate = treePharmacy.getDate().addDays(timeLength);
+            PharmacyDate endDate = treePharmacy.getDate().addDays(quantity);
+
+            int retrieved = treePharmacy.retrieve(quantity, name, endDate);
+
+            if(retrieved < quantity) {
+                outputWriter.write(name + " " + quantityPerCycle + " " + cycles + "  COMMANDE\n");
+            } else {
+                outputWriter.write(name + " " + quantityPerCycle + " " + cycles + "  OK\n");
+            }
 
             currentString = inputs.removeFirst();
         }
+
+        outputWriter.write("\n");
     }
 
     private static void processApprov() throws IOException {
@@ -120,6 +135,6 @@ public class Tp2 {
             throw new IOException("Error in file structure");
 
         outputWriter.append("STOCK " + treePharmacy.getDate() + "\n");
-        outputWriter.append("" + treePharmacy);
+        outputWriter.append("" + treePharmacy + "\n");
     }
 }

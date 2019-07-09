@@ -35,6 +35,10 @@ public class PharmacyItem implements Comparable<PharmacyItem> {
                 ((PharmacyItem) o).medication.equals(this.medication);
     }
 
+    public String getMedication() {
+        return this.medication;
+    }
+
     public int getQuantity() {
         return this.quantity;
     }
@@ -45,6 +49,10 @@ public class PharmacyItem implements Comparable<PharmacyItem> {
 
     public void removeQuantity(int quantity){
         this.quantity -= quantity;
+    }
+
+    public PharmacyDate getDate() {
+        return this.date;
     }
 
     public boolean isValid() {

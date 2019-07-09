@@ -159,7 +159,7 @@ public class TreePharmacy {
         return false;
     }
 
-    public boolean removeCondition(Condition<PharmacyItem> condition) {
+    public PharmacyItem removeCondition(Condition<PharmacyItem> condition) {
         BinaryNode previousNode = null;
         BinaryNode currentNode = head;
 
@@ -192,39 +192,39 @@ public class TreePharmacy {
 
                     if(previousNode == null) {
                         head = null;
-                        return true;
+                        return currentNode.getValue();
                     } else if(currentNode == previousNode.getLeft()) {
                         previousNode.setLeft(null);
-                        return true;
+                        return currentNode.getValue();
                     } else if(currentNode == previousNode.getRight()) {
                         previousNode.setRight(null);
-                        return true;
+                        return currentNode.getValue();
                     }
                 } else if(currentNode.getLeft() == null) {
                     //Si la node a un seul enfant, à droite.
 
                     if(previousNode == null) {
                         head = currentNode.getRight();
-                        return true;
+                        return currentNode.getValue();
                     } else if(currentNode == previousNode.getLeft()) {
                         previousNode.setLeft(currentNode.getRight());
-                        return true;
+                        return currentNode.getValue();
                     } else if(currentNode == previousNode.getRight()) {
                         previousNode.setRight(currentNode.getRight());
-                        return true;
+                        return currentNode.getValue();
                     }
                 } else if(currentNode.getRight() == null) {
                     //Si la node a un seul enfant, à gauche.
 
                     if(previousNode == null) {
                         head = currentNode.getLeft();
-                        return true;
+                        return currentNode.getValue();
                     } else if(currentNode == previousNode.getLeft()) {
                         previousNode.setLeft(currentNode.getLeft());
-                        return true;
+                        return currentNode.getValue();
                     } else if(currentNode == previousNode.getRight()) {
                         previousNode.setRight(currentNode.getLeft());
-                        return true;
+                        return currentNode.getValue();
                     }
                 } else {
                     //Si la node a deux enfants, on pleure :(
@@ -245,43 +245,74 @@ public class TreePharmacy {
 
                         if(previousNode == null) {
                             head = leftRightMost;
-                            return true;
+                            return currentNode.getValue();
                         } else if(currentNode == previousNode.getRight()) {
                             previousNode.setRight(leftRightMost);
-                            return true;
+                            return currentNode.getValue();
                         } else if(currentNode == previousNode.getLeft()) {
                             previousNode.setLeft(leftRightMost);
-                            return true;
+                            return currentNode.getValue();
                         }
                     } else {
                         leftRightMost.setRight(currentNode.getRight());
 
                         if(previousNode == null) {
                             head = leftRightMost;
-                            return true;
+                            return currentNode.getValue();
                         } else if(currentNode == previousNode.getRight()) {
                             previousNode.setRight(leftRightMost);
-                            return true;
+                            return currentNode.getValue();
                         } else if(currentNode == previousNode.getLeft()) {
                             previousNode.setLeft(leftRightMost);
-                            return true;
+                            return currentNode.getValue();
                         }
                     }
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
-    public boolean retrieve(int quantity, PharmacyDate maxDate) {
-          return false;//TODO bleh
+    public int retrieve(final int quantity, final String name, final PharmacyDate maxDate) {
+        int currentQuantity = 0;
+
+        Condition<PharmacyItem> condition = new Condition<PharmacyItem>() {
+            @Override
+            public int respectsCondition(PharmacyItem type) {
+                int differenceTemps = maxDate.compareTo(type.getDate());
+
+                if (differenceTemps > 0) {
+                    return differenceTemps;
+                } else {
+                    return -name.compareTo(type.getMedication());
+                }
+            }
+        };
+
+        PharmacyItem nextItem = null;
+        while(currentQuantity < quantity) {
+            nextItem = this.removeCondition(condition);
+
+            if(nextItem == null) {
+                break;
+            } else {
+                currentQuantity += nextItem.getQuantity();
+            }
+        }
+
+        if(nextItem != null && currentQuantity > quantity) {
+            System.out.println(new PharmacyItem(nextItem.getDate(), nextItem.getMedication(), currentQuantity - quantity));
+            this.insert(new PharmacyItem(nextItem.getDate(), nextItem.getMedication(), currentQuantity - quantity));
+        }
+
+        return currentQuantity - quantity;
     }
 
     public int removeAllCondition(Condition<PharmacyItem> condition) {
         int removed = 0;
 
-        while(removeCondition(condition)) {
+        while(removeCondition(condition) != null) {
             removed++;
         }
 
