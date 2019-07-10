@@ -14,6 +14,7 @@ public class Tp2 {
     private static TreePharmacy treePharmacy;
 
     private static LinkedList<String> inputs = new LinkedList<>();
+    private static LinkedList<PharmacyItem> orderList = new LinkedList<>();
 
     public static void main(String args[]) {
         String inputFile = "src/tests/exemple7.txt";
@@ -74,7 +75,20 @@ public class Tp2 {
             if(!inputs.removeFirst().equals(";"))
                 throw new IOException("Error in file structure");
 
-            outputWriter.append(currentDate + " OK\n\n");
+            if(orderList.size() == 0) {
+                outputWriter.append(currentDate + " OK\n\n");
+            } else {
+                outputWriter.append(currentDate + " COMMANDES :\n");
+
+                while(!orderList.isEmpty()) {
+                    PharmacyItem item = orderList.removeFirst();
+
+                    outputWriter.append(item.getMedication() + " " + item.getQuantity() + "\n");
+                }
+
+                outputWriter.append("\n");
+            }
+
         } catch(ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             //throw new IOException("Error in file structure");
@@ -102,6 +116,17 @@ public class Tp2 {
 
             if(!retrieved) {
                 outputWriter.write(name + " " + quantityPerCycle + " " + cycles + "  COMMANDE\n");
+
+                boolean found = false;
+                for(PharmacyItem pharmacyItem : orderList) {
+                    if(pharmacyItem.getMedication().equals(name)) {
+                        pharmacyItem.addQuantity(quantity);
+                        found = true;
+                    }
+                }
+
+                if(!found)
+                    orderList.add(new PharmacyItem(PharmacyDate.BEGIN_DATE, name, quantity));
             } else {
                 outputWriter.write(name + " " + quantityPerCycle + " " + cycles + "  OK\n");
             }

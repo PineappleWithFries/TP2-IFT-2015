@@ -27,7 +27,12 @@ STOCK 2017-10-26
 Medicament1 80 2018-05-29
 Medicament5 10 2018-05-27
 
-2017-10-27 OK
+2017-10-27 COMMANDES :
+Medicament6 3
+Medicament3 7
+Medicament9 4
+Medicament2 40
+Medicament8 4
 
 APPROV OK
 STOCK 2017-10-27

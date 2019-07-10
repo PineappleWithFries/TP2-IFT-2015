@@ -1,7 +1,10 @@
 package pharmacy;
 
+import primitives.Condition;
 import primitives.PharmacyDate;
 import primitives.PharmacyItem;
+
+import java.util.LinkedList;
 
 public class BinaryNode {
     public final static String PRINT_BUFFER = "|";
@@ -56,6 +59,24 @@ public class BinaryNode {
         }
 
         return null;
+    }
+
+    public LinkedList<PharmacyItem> getAll(Condition<PharmacyItem> condition, LinkedList<PharmacyItem> list) {
+        if(list == null) {
+            list = new LinkedList<>();
+        }
+
+        if(condition.respectsCondition(value) < 0) {
+            list.add(value);
+        }
+
+        if(left != null)
+            left.getAll(condition, list);
+
+        if(right != null)
+            right.getAll(condition, list);
+
+        return list;
     }
 
     public String toString() {

@@ -288,6 +288,10 @@ public class TreePharmacy {
 
         item.removeQuantity(quantity);
 
+        if(item.getQuantity() == 0) {
+            this.remove(item);
+        }
+
         return true;
         /*
         Condition<PharmacyItem> condition = new Condition<PharmacyItem>() {
@@ -339,11 +343,26 @@ public class TreePharmacy {
     }
 
     public void setDate(PharmacyDate pharmacyDate) {
-        //TODO Supprimer les médécines avec temps d'expiration
+        Condition condition = new Condition<PharmacyItem>() {
+            @Override
+            public int respectsCondition(PharmacyItem type) {
+                return -pharmacyDate.compareTo(type.getDate());
+            }
+        };
+
+        LinkedList<PharmacyItem> toRemove = new LinkedList<>();
+        if(head != null) {
+            toRemove = head.getAll(condition, null);
+        }
+
+        for(PharmacyItem pi : toRemove) {
+            this.remove(pi);
+        }
+
         this.currentDate = pharmacyDate;
     }
 
     public String toString() {
-        return head.toString();
+        return head != null ? head.toString() : "";
     }
 }
