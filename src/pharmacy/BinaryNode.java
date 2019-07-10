@@ -34,7 +34,29 @@ public class BinaryNode {
         this.right = right;
     }
 
+    public PharmacyItem getMedecine(String name, int quantity, PharmacyDate expirationDate) {
 
+        PharmacyItem leftFound = null;
+        if(left != null) {
+            leftFound = left.getMedecine(name, quantity, expirationDate);
+        }
+
+        if(leftFound != null) {
+            return leftFound;
+        }
+
+        if(value.getDate().compareTo(expirationDate) > 0 && value.getMedication().equals(name) &&
+                value.getQuantity() >= quantity) {
+
+            return value;
+        }
+
+        if(right != null) {
+            return right.getMedecine(name, quantity, expirationDate);
+        }
+
+        return null;
+    }
 
     public String toString() {
         return "" + value + "\n" + (left != null ? left.toString() : "") + (right != null ? right.toString() : "");

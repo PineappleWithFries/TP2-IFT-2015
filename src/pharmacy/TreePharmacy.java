@@ -4,6 +4,9 @@ import primitives.Condition;
 import primitives.PharmacyDate;
 import primitives.PharmacyItem;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class TreePharmacy {
     private BinaryNode head;
     private PharmacyDate currentDate;
@@ -274,9 +277,19 @@ public class TreePharmacy {
         return null;
     }
 
-    public int retrieve(final int quantity, final String name, final PharmacyDate maxDate) {
-        int currentQuantity = 0;
+    public boolean retrieve(final int quantity, final String name, final PharmacyDate maxDate) {
+        if(head == null)
+            return false;
 
+        PharmacyItem item = head.getMedecine(name, quantity, maxDate);
+
+        if(item == null)
+            return false;
+
+        item.removeQuantity(quantity);
+
+        return true;
+        /*
         Condition<PharmacyItem> condition = new Condition<PharmacyItem>() {
             @Override
             public int respectsCondition(PharmacyItem type) {
@@ -285,13 +298,14 @@ public class TreePharmacy {
                 if (differenceTemps > 0) {
                     return differenceTemps;
                 } else {
-                    return -name.compareTo(type.getMedication());
+                    return name.compareTo(type.getMedication());
                 }
             }
         };
 
+        LinkedList<PharmacyDate> nonSelected = new LinkedList<>();
         PharmacyItem nextItem = null;
-        while(currentQuantity < quantity) {
+        while(nextItem != null) {
             nextItem = this.removeCondition(condition);
 
             if(nextItem == null) {
@@ -301,12 +315,13 @@ public class TreePharmacy {
             }
         }
 
-        if(nextItem != null && currentQuantity > quantity) {
-            System.out.println(new PharmacyItem(nextItem.getDate(), nextItem.getMedication(), currentQuantity - quantity));
+        while(nonSelected.) {
             this.insert(new PharmacyItem(nextItem.getDate(), nextItem.getMedication(), currentQuantity - quantity));
         }
 
         return currentQuantity - quantity;
+
+         */
     }
 
     public int removeAllCondition(Condition<PharmacyItem> condition) {

@@ -16,8 +16,8 @@ public class Tp2 {
     private static LinkedList<String> inputs = new LinkedList<>();
 
     public static void main(String args[]) {
-        String inputFile = "src/tests/exemple1.txt";
-        String outputFile = "src/tests/exemple1-.txt";
+        String inputFile = "src/tests/exemple7.txt";
+        String outputFile = "src/tests/exemple7-.txt";
         treePharmacy = new TreePharmacy();
 
         PharmacyDate testJour = new PharmacyDate(1999, PharmacyDate.Month.August, 2);
@@ -98,9 +98,9 @@ public class Tp2 {
 
             PharmacyDate endDate = treePharmacy.getDate().addDays(quantity);
 
-            int retrieved = treePharmacy.retrieve(quantity, name, endDate);
+            boolean retrieved = treePharmacy.retrieve(quantity, name, endDate);
 
-            if(retrieved < quantity) {
+            if(!retrieved) {
                 outputWriter.write(name + " " + quantityPerCycle + " " + cycles + "  COMMANDE\n");
             } else {
                 outputWriter.write(name + " " + quantityPerCycle + " " + cycles + "  OK\n");
