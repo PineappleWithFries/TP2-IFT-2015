@@ -17,8 +17,17 @@ public class Tp2 {
     private static LinkedList<PharmacyItem> orderList = new LinkedList<>();
 
     public static void main(String args[]) {
-        String inputFile = "src/tests/exemple7.txt";
-        String outputFile = "src/tests/exemple7-.txt";
+
+        String inputFile;
+        String outputFile;
+        if(args != null && args.length >= 2) {
+            inputFile = args[0];
+            outputFile = args[1];
+        } else {
+            inputFile = "src/tests/exemple7.txt";
+            outputFile = "src/tests/exemple7-.txt";
+        }
+
         treePharmacy = new TreePharmacy();
 
         PharmacyDate testJour = new PharmacyDate(1999, PharmacyDate.Month.August, 2);
